@@ -1,0 +1,10 @@
+{
+	"admin_url" : "127.0.0.1:3333",
+	"phish_url" : "0.0.0.0:80",
+	"smtp" : {
+		"host" : "smtp.example.com:25",
+		"user" : "username",
+		"pass" : "password"
+	},
+	"dbpath" : "gophish.db"
+}

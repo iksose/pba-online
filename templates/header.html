@@ -1,0 +1,107 @@
+{{define "header"}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="/static/css/app.css"> -->
+    <link href="/css/app.css" rel="stylesheet">
+    <script src="/js/jquery.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script>
+    {{if .User.Username}}
+    var user = {
+        api_key : {{ .User.ApiKey }},
+        username : {{ .User.Username }}
+    }
+    console.log("User", user)
+    {{end}}
+    </script>
+    </head>
+    <body>
+<!-- HEADER -->
+ <div class="pad-masthead">
+     <a>Stuff</a>
+ </div>
+ <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <img src="/images/img_logo.png">
+
+          {{if .User.Username}}
+          <div class="btn-group navbar-right" id="navbar-dropdown">
+              <button type="button" class="btn btn-primary"><i class="fa fa-user"></i> {{.User.Username}}</button>
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                  <span class="caret" style="border-top-color:#FFFFFF"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                  <li><a href="#/settings">Settings</a>
+                  </li>
+                  <li class="divider"></li>
+                  <li><a href="/logout">Logout</a>
+                  </li>
+              </ul>
+          </div>
+          {{else}}
+            <form class="form-inline navbar-right form-signin" role="form" action="/login" method="POST">
+                <div class="form-group">
+                    <label class="sr-only" for="exampleInputPassword2">Username</label>
+                    <input type="text" class="form-control input-sm"  placeholder="Username"  name="username" required>
+                </div>
+
+                <div class="input-group">
+                  <input type="password" class="form-control input-sm" placeholder="Password"  name="password" required>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default btn-sm" type="button submit">Go!</button>
+                  </span>
+                </div>
+
+            </form>
+            {{end}}
+        </nav>
+      </div>
+</div>
+<!-- end 2nd masthead -->
+<div class="nav-masthead">
+    <div class="container">
+        <nav class="blog-nav">
+            <a class="blog-nav-item active" href="#">Home</a>
+            <a class="blog-nav-item" href="#">Products & Services</a>
+            <a class="blog-nav-item" href="#">About</a>
+            <a class="blog-nav-item" href="#">Elements</a>
+            <a class="blog-nav-item" href="#">News</a>
+            <a class="blog-nav-item" href="#">Resources</a>
+            <a class="blog-nav-item" href="#">Contact</a>
+        </nav>
+        <!-- SEARCHBAR -->
+        <div class="col-sm-3 col-md-3 pull-right">
+        <form class="navbar-form" role="search">
+        <div class="input-group">
+            <input type="text" class="form-control input-sm" placeholder="Search" name="srch-term" id="srch-term">
+            <div class="input-group-btn">
+                <button class="btn btn-default btn-sm" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </div>
+        </form>
+        </div>
+        <!-- END SEARCHBAR -->
+    </div>
+</div>
+<!-- end 3rd masthead -->
+<!-- END HEADER -->
+<!-- START CONTENT -->
+        {{template "content" .}}
+        <!-- FOOTER -->
+      {{template "footer" .}}
+      <!-- END FOOTER -->
+    </body>
+
+    <style>
+    body > div.nav-masthead > div > div{
+        margin-top: -3px;
+        margin-bottom: -7px;
+    }
+    </style>
+</html>
+{{end}}

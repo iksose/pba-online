@@ -1,0 +1,78 @@
+{{define "footer"}}
+<footer>
+    <div class="footer-masthead">
+        <!-- &copy; Copyright 2013 by golang-samples. -->
+        <div class="row">
+            <div class="col-md-3">
+                <br>
+                <img src='/images/img_logoFooter.png'>
+                <br>
+                <address class="text-muted">
+                6300 Enterprise Road<br>
+                Kansas City, Missouri 64120<br>
+                <abbr title="Phone"> 816.245.5700</abbr><br>
+                <abbr title="Fax"> 816.245.5702</abbr><br>
+                <abbr title="Toll Free"> 800.333.8097</abbr>
+                </address>
+            </div>
+            <div class="col-md-3">
+                <br>
+                <p class="text-muted"><strong>Connect & Share</strong></p>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+            <div class="col-md-3">
+                <br>
+                <p class="text-muted"><strong>Products & Services</strong></p>
+                    <p class="text-muted">ProfitGuard</p>
+                    <p class="text-muted">Negotiator</p>
+                    <p class="text-muted">TriNet</p>
+                    <p class="text-muted">ScriptCard</p>
+                    <p class="text-muted">EnsurePay</p>
+                    <p class="text-muted">Marketing</p>
+                    <br>
+            </div>
+            <div class="col-md-3">
+                <br>
+                <p class="text-muted"><strong>Learn More</strong></p>
+                <p class="text-muted">About</p>
+                <p class="text-muted">Elements</p>
+                <p class="text-muted">News</p>
+                <p class="text-muted">Resources</p>
+                <p class="text-muted">Contact</p>
+                <p class="text-muted">Careers</p>
+                <br>
+            </div>
+        </div>
+        <!-- END ROW -->
+        <div class="row" id="copyright">
+            <p class="text-muted">© 2014 PBA Health. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<style>
+    /*.footer-masthead{
+        padding-top: 30px;
+    }*/
+    .footer-masthead > div{
+        /*padding-top: 30px;*/
+        padding-right: 10%;
+        padding-left: 10%;
+    }
+    body > footer > div > div > div > p{
+        margin-bottom: -1px;
+    }
+    body > footer > div > div> div{
+        border-right: 1px #f0f0f0 solid;
+    }
+    #copyright{
+        border-top: 1px #f0f0f0 solid;
+    }
+</style>
+
+{{end}}
