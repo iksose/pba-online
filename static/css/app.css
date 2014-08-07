@@ -2,18 +2,28 @@
  * Globals
  */
 
+*{
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif
+}
+
  body > div.stuff-masthead{
      color: white;
      /*padding-left: 50px;*/
      padding-right: 50px;
  }
  .testaments{
-     padding-top: 10px;
-     padding-left: 10px;
-     padding-right: 10px;
-     /*display: block;
-     float: right;*/
+     color: white;
+     font-color: white;
  }
+
+.testament > center > p{
+    color: white;
+}
+
+.testament > center > h3{
+    color: white;
+}
+
  #centerTest{
      padding-left: -20px !important;
  }
@@ -111,6 +121,11 @@ h6, .h6 {
     background-color: #d0d0d0;
 }
 
+.menu-masthead{
+    background-color: #428bca;
+    /*padding-bottom: 20px;*/
+    /*margin-bottom: 80px;*/
+}
 
 .pad-masthead{
     background-color: #428bca;

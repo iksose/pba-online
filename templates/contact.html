@@ -1,0 +1,53 @@
+{{define "content"}}
+<div class="container">
+	<div class="row padded">
+		<div class="col-md-5 col-md-offset-1">
+			<h2>Contact us</h2>
+			<form role="form">
+			<div class="form-group" action="/search" method="POST">
+				<input type="text" class="form-control" placeholder="first name">
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="last name">
+			</div>
+			<div class="form-group">
+				<input type="phone" class="form-control" placeholder="phone number">
+			</div>
+			<div class="form-group">
+				<input type="email" class="form-control" placeholder="email address">
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="subject">
+			</div>
+			<div class="form-group">
+				<textarea class="form-control" rows="5" placeholder="message"></textarea>
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+			<br>
+		</div>
+		<div class="col-md-5 col-md-offset-1 bordered">
+			<p>6300 Enterprise Road</p>
+			<p>Kansas City, Missouri 64120</p>
+			<p><span class="glyphicon glyphicon-earphone"></span> Phone: 816.245.5700</p>
+			<p><span class="glyphicon glyphicon-file"></span> Fax: 816.245.5702</p>
+			<p><span class="glyphicon glyphicon-phone-alt"></span> Toll-Free: 800.333.8097</p>
+			<p><span class="glyphicon glyphicon-envelope"></span> Email: info@pbahealth.com</p>
+		</div>
+	</div>
+</div>
+
+<style>
+.bordered  {
+         border-left: 1px solid gray;
+/*         position: absolute;
+         top: 50%;
+         bottom: 0;*/
+         }
+
+.padded {
+	padding-top: 50px;
+}
+ </style>
+
+{{end}}

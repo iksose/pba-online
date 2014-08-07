@@ -12,14 +12,14 @@
   <!-- Wrapper for slides -->
   <div class="carousel-inner">
     <div class="item active">
-      <img src="images/web-drug.jpg" alt="...">
+      <img src="images/blue.png" alt="...">
       <div class="carousel-caption">
         <h1>ProfitGuard</h1>
         <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam fermentum ac diam lobortis semper. Donec laoreet lobortis quam sed luctus. Ut vulputate tempor felis, in laoreet tellus rhoncus quis.</h3>
       </div>
     </div>
     <div class="item">
-      <img src="/images/web-drug.jpg" alt="...">
+      <img src="/images/orange.png" alt="...">
       <div class="carousel-caption">
         <h1>NEGOTIATOR</h1>
         <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam fermentum ac diam lobortis semper. Donec laoreet lobortis quam sed luctus. Ut vulputate tempor felis, in laoreet tellus rhoncus quis.</h3>
@@ -36,53 +36,146 @@
   </a>
 </div>
 </div>
-<!-- container fluid -->
+<!-- end container fluid -->
 
 <!-- <div class="whitestripe-masthead">
     Yolo
 </div> -->
-<div class="stuff-masthead">
-    <div class="testaments pull-right" id="leftTest">
+<div class="row stuff-masthead">
+    <div class='col-xs-12 col-sm-4 testament'>
+        <center>
     <img src='/images/img_icon01.png'>
     <h3>Accuracy you can trust</h3>
     <p>The assurance of knowing you’ll get what you ordered. Our VAWD- and HDMA-certified warehouse has a 99.995% accurate order fill rate.</p>
+    </center>
     </div>
-    <div class="testaments pull-right" id="centerTest">
+    <div  class='col-xs-12 col-sm-4 testament'>
+        <center>
         <img src='/images/img_icon02.png'>
     <h3>Business intelligence for pharmacy</h3>
     <p>Working smarter just got easier. Our dynamic data, tools and insights can help you make the best decisions for your pharmacy business.</p>
+    </center>
     </div>
-    <div class="testaments " id="rightTest">
+    <div  class='col-xs-12 col-sm-4 testament'>
+        <center>
+    <img src='/images/img_icon03.png'>
+    <h3>Contracting with confidence</h3>
+    <p>We have you covered. Expert contract negotiation and management plus the personal support and dedication your independent pharmacy deserves.</p>
+</center>
+    </div>
+    <!-- <div class="testaments " id="rightTest">
         <img src='/images/img_icon03.png'>
     <h3>Contracting with confidence</h3>
     <p>We have you covered. Expert contract negotiation and management plus the personal support and dedication your independent pharmacy deserves.</p>
-    </div>
+    </div> -->
 
 </div>
 
-<div class="row">
-  <div class="col-md-8">
-  <h3 class="text-muted">ELEMENTS MAGAZINE</h3>
+<div class='container-fluid'>
+<div class="row" id="mainBody_Row">
+  <div class="col-sm-8">
+      <br>
+  <h3 class="text-muted lilpadding">ELEMENTS MAGAZINE</h3>
   <hr>
+    <div class="row articles_row">
       {{range .Articles}}
-      <div class="wut">
-      <h4 class='text-muted'><a href="/articles/{{.NewProp}}/">{{.Header}}</a></h4>
-      <p>{{.Body}}</p>
+      <div class="wut col-sm-6 col-xs-12">
+      <img  class="article_img" src="/uploads/{{.Img}}">
+      <span class="no_images">
+          <h4 class='text-muted'><a href="/elements/{{.PrettyURL}}/">{{.Header}}</a></h4>
+          <p class="pBody">{{.Teaser}} <a href="/elements/{{.PrettyURL}}/">… read more »</a></p>
+      </span>
       </div>
       {{end}}
   </div>
-  <div class="col-md-4">
-      <h3 class="text-muted">News</h3>
-      <hr>
+      <div class="row">
+          <br>
+          <div class="divider"><hr></div>
+          <div class="pull-left">
+              <center>
+                  <a href="/elements" type="button" class="btn btn-primary">More Articles</a>
+                  <!-- <br> -->
+              </center>
+          </div>
+          <div class="divider"><hr></div>
+      </div>
   </div>
+  <div class="col-sm-4">
+      <div class="row">
+          <br>
+          <h3 class="text-muted">News</h3>
+          <hr>
+          {{range .Articles}}
+          {{.Teaser}} <a href="#">… read more »</a>
+          <br><br>
+          {{end}}
+          <button type="button" class="btn btn-primary pull-right">More News</button>
+          <br>
+          <br>
+          <h3 class="text-muted">SUBSCRIBE</h3>
+          <hr>
+          <img src="/images/img_elementsCover_q1_2014.png" class="subscribe_img">
+          <p class="signup_text">
+              Sign up for a FREE subscription to Elements magazine!
+          </p>
+          <br>
+          <button type="button" class="btn btn-primary pull-right">Sign up now</button>
+      </div>
+  </div>
+</div>
+<!-- end container -->
 </div>
 
 
 <style>
-.wut{
+
+.articles_row{
+    padding-right: 80px;
+}
+
+.subscribe_img{
+    height: 170px;
     float: left;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-right:10px;
+}
+
+.divider{
+    float: left;
+    width: 40%;
+}
+
+#mainBody_Row{
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+}
+
+
+span.no_images > p{
+    display: inline;
+}
+
+/*no images in the p*/
+span.no_images > p > img{
+    display: none;
+}
+.wut{
+  padding-bottom: 10%;
+  padding-left: 5%;
+}
+.lilpadding{
+  padding-left: 2.5%;
+}
+
+.wut span > img{
+    /*height: 80px;*/
+    /*width: 30px;*/
+    /*size: 80px;*/
+    display: none;
+}
+
+.article_img{
+    /*height: 160px;*/
+    width: 100%;
 }
 
 </style>

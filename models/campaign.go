@@ -138,19 +138,19 @@ func PostCampaign(c *Campaign, uid int64) error {
 		Logger.Println(err)
 	}
 	// Insert all the results
-	for _, g := range c.Groups {
-		// Insert a result for each target in the group
-		for _, t := range g.Targets {
-			r := Result{Email: t.Email, Status: STATUS_UNKNOWN, CampaignId: c.Id, UserId: c.UserId}
-			r.GenerateId()
-			err = db.Save(&r).Error
-			if err != nil {
-				Logger.Printf("Error adding result record for target %s\n", t.Email)
-				Logger.Println(err)
-			}
-			c.Results = append(c.Results, r)
-		}
-	}
+	// for _, g := range c.Groups {
+	// 	// Insert a result for each target in the group
+	// 	for _, t := range g.Targets {
+	// 		r := Result{Email: t.Email, Status: STATUS_UNKNOWN, CampaignId: c.Id, UserId: c.UserId}
+	// 		r.GenerateId()
+	// 		err = db.Save(&r).Error
+	// 		if err != nil {
+	// 			Logger.Printf("Error adding result record for target %s\n", t.Email)
+	// 			Logger.Println(err)
+	// 		}
+	// 		c.Results = append(c.Results, r)
+	// 	}
+	// }
 	return nil
 }
 

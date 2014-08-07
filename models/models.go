@@ -9,8 +9,8 @@ import (
 	"github.com/jinzhu/gorm"
 	// "github.com/iksose/phishClone/config"
 	// _ "github.com/mattn/go-sqlite3"
-    _"database/sql"
-    _"github.com/go-sql-driver/mysql"
+	_ "database/sql"
+	_ "github.com/go-sql-driver/mysql"
 	// "code.google.com/p/go.crypto/bcrypt"
 )
 
@@ -47,7 +47,7 @@ type Response struct {
 // Setup initializes the Conn object
 // It also populates the Gophish Config object
 func Setup() error {
-	db, err = gorm.Open("mysql", "root:root@unix(/tmp/mysql.sock)/test");
+	db, err = gorm.Open("mysql", "root:root@unix(/tmp/mysql.sock)/test?parseTime=True")
 	db.LogMode(false)
 	db.SetLogger(Logger)
 	if err != nil {

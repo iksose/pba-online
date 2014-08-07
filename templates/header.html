@@ -4,30 +4,62 @@
     <head>
         <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="/static/css/app.css"> -->
     <link href="/css/app.css" rel="stylesheet">
+    <link href="/css/mmenu.css" rel="stylesheet">
+    <!-- <link href="/css/tagmanager.css" rel="stylesheet"> -->
     <script src="/js/jquery.js"></script>
+    <script src="/js/lodash.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script src="/js/typeahead.js"></script>
+    <script src="/js/jquery_mmenu.js"></script>
     <script>
     {{if .User.Username}}
     var user = {
         api_key : {{ .User.ApiKey }},
-        username : {{ .User.Username }}
+        username : "{{ .User.Username }}"
     }
     console.log("User", user)
     {{end}}
     </script>
+    {{if .User.Username}}
+
+    <!-- // <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script> -->
+    {{end}}
+    <script src="/js/tinymce/tinymce.min.js"></script>
     </head>
     <body>
+
+
+
+
 <!-- HEADER -->
- <div class="pad-masthead">
+ <div class="pad-masthead hidden-xs">
      <a>Stuff</a>
  </div>
- <div class="blog-masthead">
-      <div class="container">
+ <div class='visible-xs-block pad-masthead navbar-fixed-top' id="padder">
+ <br>
+     <h3><span class="glyphicon glyphicon-list"></span> MENU</h3>
+ </div>
+
+ <!-- off-page nav -->
+  <div id="my-menu">
+     <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about/">About us</a></li>
+        <li><a href="/contact/">Contact</a></li>
+     </ul>
+  </div>
+  <!-- end off page nav -->
+
+
+ <div class='lol'>
+ <div class="blog-masthead zindex" >
+      <div class="container-fluid">
         <nav class="blog-nav">
           <img src="/images/img_logo.png">
 
+          <span class='hidden-xs'>
           {{if .User.Username}}
           <div class="btn-group navbar-right" id="navbar-dropdown">
               <button type="button" class="btn btn-primary"><i class="fa fa-user"></i> {{.User.Username}}</button>
@@ -36,9 +68,10 @@
                   <span class="sr-only">Toggle Dropdown</span>
               </button>
               <ul class="dropdown-menu" role="menu">
-                  <li><a href="#/settings">Settings</a>
+                  <li><a href="/new">New Post +</a>
                   </li>
                   <li class="divider"></li>
+                  <!-- could post to logout and refresh current page -->
                   <li><a href="/logout">Logout</a>
                   </li>
               </ul>
@@ -59,26 +92,63 @@
 
             </form>
             {{end}}
+             <!-- end hidden xs -->
+            </span>
         </nav>
       </div>
 </div>
 <!-- end 2nd masthead -->
-<div class="nav-masthead">
-    <div class="container">
-        <nav class="blog-nav">
-            <a class="blog-nav-item active" href="#">Home</a>
-            <a class="blog-nav-item" href="#">Products & Services</a>
-            <a class="blog-nav-item" href="#">About</a>
-            <a class="blog-nav-item" href="#">Elements</a>
-            <a class="blog-nav-item" href="#">News</a>
-            <a class="blog-nav-item" href="#">Resources</a>
-            <a class="blog-nav-item" href="#">Contact</a>
+<div class="nav-masthead hidden-xs" role="navigation">
+    <div class="container-fluid nav_padding" >
+        <nav class="blog-nav" id="nav_items" >
+            <a class="blog-nav-item" href="/">Home</a>
+              <div class="navbar-collapse collapse floatleft">
+              <ul class="nav navbar-nav">
+                <li class="dropdown">
+                  <a href="/products" class="dropdown-toggle whitetext" data-toggle="dropdown"> Products and Services <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                      <div class="main_products pull-left">
+                          <div class="dropdown_content">
+                              <a href='/products/profitguard'>ProfitGuard</a>
+                              <p>Also there's this content
+                          </div>
+                          <div class="dropdown_content">
+                              <a href='/products/negotiator'>Negotiator</a>
+                              <p>Also there's this content
+                          </div>
+                      </div>
+                      <div class="pull-left">
+                          <p>Other Services</p>
+                          <ul>
+                              <li>Trinet</li>
+                              <li>Scriptcard</li>
+                              <li>Ensurepay</li>
+                          </ul>
+                      </div>
+                        <!-- <li><a href="/">Another action</a></li>
+                        <li><a href="/">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Nav header</li>
+                        <li><a href="/">Separated link</a></li>
+                        <li><a href="/">One more separated link</a></li> -->
+                  </ul>
+                </li>
+              </ul>
+          </div><!--/.nav-collapse -->
+
+
+            <a class="blog-nav-item" href="/about">About</a>
+            <a class="blog-nav-item" href="/elements">Elements</a>
+            <a class="blog-nav-item" href="/news">News</a>
+            <a class="blog-nav-item" href="/resources">Resources</a>
+            <a class="blog-nav-item" href="/contact">Contact</a>
         </nav>
         <!-- SEARCHBAR -->
-        <div class="col-sm-3 col-md-3 pull-right">
-        <form class="navbar-form" role="search">
+        <div class="col-sm-2 col-md-3 col-lg-4 pull-right">
+        <form class="navbar-form" role="search" action="/search" method="GET">
+            <!-- <input type="hidden" name="name" value="jon" />  -->
         <div class="input-group">
-            <input type="text" class="form-control input-sm" placeholder="Search" name="srch-term" id="srch-term">
+            <input type="text" class="form-control input-sm" placeholder="Search" name="name">
             <div class="input-group-btn">
                 <button class="btn btn-default btn-sm" type="submit"><i class="glyphicon glyphicon-search"></i></button>
             </div>
@@ -90,18 +160,218 @@
 </div>
 <!-- end 3rd masthead -->
 <!-- END HEADER -->
+<!-- <div class="container-fluid"> -->
 <!-- START CONTENT -->
         {{template "content" .}}
         <!-- FOOTER -->
       {{template "footer" .}}
       <!-- END FOOTER -->
+    <!-- end animate   -->
+</div>
     </body>
 
+  <script type="text/javascript">
+   $(document).ready(function() {
+    var toggled = false;
+      $("#my-menu").mmenu();
+      $("#padder").click(function() {
+        if(!toggled){
+         $("#my-menu").trigger("open.mm");
+         toggled = true
+        }else{
+          $("#my-menu").trigger("close.mm");
+          toggled = false;
+        }
+      });
+   });
+</script>
+
     <style>
+
+    .nav_padding{
+        padding-left: 10%;
+    }
+
+    #firstNav_item{
+        padding-left: 80px;
+    }
+
+    .dropdown-menu{
+        width: 500px;
+    }
+
+    .dropdown_content{
+        padding-left: 20px;
+        padding-right: 20px
+    }
+
+
+
+#nav_items > div{
+    margin-top: -5px;
+}
+#nav_items > div > ul{
+    margin-bottom: -5px;
+}
+
+#nav_items > div > ul > li > ul{
+    margin-top: -5px
+}
+
+.navbar-nav .dropdown:hover > .dropdown-menu {
+  display: block;
+}
+.navbar-nav .dropdown:hover > a[data-toggle=dropdown] + .dropdown-menu {
+  display: none;
+}
+.navbar-nav .dropdown.open > a[data-toggle=dropdown] + .dropdown-menu {
+  display: block;
+}
+
+    #nav_items > div{
+        float: left;
+    }
+
+    #nav_items > a.blog-nav-item{
+        float: left;
+    }
+
+   /* END DROPDOWN*/
+
+   .whitetext{
+        color: #cdddeb
+    }
+
+    .whitewhite >{
+        color: white;
+    }
+
+    .whitewhite > ul > li > a{
+        color: white;
+    }
+
+    #carousel-example-generic{
+        margin-right: -15px !important;
+    }
+    #carousel-example-generic > a.right.carousel-control{
+        margin-right: 5px;
+    }
+    body{
+        overflow-x: hidden;
+    }
+
     body > div.nav-masthead > div > div{
         margin-top: -3px;
         margin-bottom: -7px;
     }
+
+
+  #toggleSideNavBtn{
+      color:white;
+      paddding-top:5px;
+      padding-bottom: 5px;
+      cursor: pointer;
+  }
+
+  #toggleSideNavBtn > span{
+      padding-left: 10px;
+      padding-top: 5px;
+      cursor: pointer;
+  }
+
+  #sidenav {
+    background: #424242;
+    margin-top: -10px;
+    display: block;
+    position: fixed;
+    height: 100%;
+    left: 0;
+    width: 400px;
+    z-index: 0;
+}
+
+#animateBody{
+    background-color: white;
+    margin-top: -10px;
+}
+
+.zindex{
+    /*z-index: 2;
+    background-color:red*/
+}
+
+#padder h3{
+    /*padding-bottom:18px;*/
+    color: white;
+    cursor: pointer;
+}
+
+
     </style>
+
+    <script>
+
+        //dropdown
+        $(function () {
+      var $win = $(window);
+      $win.resize(function () {
+          if ($win.width() > 768)
+              $(".navbar-nav > .dropdown > a").attr("data-toggle", "");
+          else
+              $(".navbar-nav > .dropdown > a").attr("data-toggle", "dropdown");
+      }).resize();
+      $(".dropdown-menu").find("input, button").each(function () {
+          $(this).click(function (e) {
+              e.stopPropagation();
+          });
+      });
+
+          // Click handler
+    jQuery('#toggleSideNavBtn').on('click', function () {
+        // console.log("Wrapper clicked", this)
+
+        // State checker
+        if( jQuery('#animateBody').attr('data-state') === 'neutral' ) {
+            // console.log("was neutral")
+            // $("#sidenav").removeClass('hidden')
+            jQuery('#animateBody').attr('data-state', 'slide-right')
+        } else {
+            // console.log("was not neutral")
+            jQuery('#animateBody').attr('data-state', 'neutral')
+        }
+    });
+
+    });
+
+    var name = location.pathname
+    // console.log("@ ", name)
+
+    var navs = $("#nav_items").children()
+
+    var nav_array = navs.toArray();
+
+    nav_array.forEach(function(item){
+        // console.log(item.href.split(":3333"))
+        // nav item returns undefined
+        if(item.href != undefined){
+            var beginning = item.href.split(":3333")[1]
+            var end = item.href.split("/")[3]
+            var localpath = location.pathname.split('/')[1]
+            if(end == localpath){
+                // console.log("Gotcha", end, localpath)
+                item.className = "blog-nav-item active"
+            }
+        }else{
+            // console.log("in navbar")
+            // console.log(item)
+            // console.log(name)
+            if(name == "/products"){
+                item.className += " whitewhite"
+            }
+        }
+
+    })
+
+    </script>
 </html>
 {{end}}

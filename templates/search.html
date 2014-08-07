@@ -1,0 +1,19 @@
+{{define "content"}}
+
+<div class="container">
+<div class="row">
+
+<h4 class='text-muted'>Results for '{{.QueryParam}}'</h4>
+
+  {{range .Results}}
+  <div class="wut col-sm-6 col-xs-12">
+  <span class="no_images">
+      <h4 class='text-muted'><a href="./articles/{{.PrettyURL}}/">{{.Header}}</a></h4>
+      <p class="pBody">{{.Teaser}} <a href="./articles/{{.PrettyURL}}/">… read more »</a></p>
+  </span>
+  </div>
+  {{end}}
+</div>
+</div>
+
+{{end}}

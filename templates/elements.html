@@ -1,0 +1,408 @@
+{{define "content"}}
+<div class='container-fluid'>
+	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+	  <!-- Indicators -->
+	  <ol class="carousel-indicators">
+	    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+	    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+	    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+	  </ol>
+
+	  <!-- Wrapper for slides -->
+	  <div class="carousel-inner">
+	  {{if .User.Username}}
+	  <button type="button" class="btn btn-info" id="edit_featured">Edit</button>
+	  {{end}}
+	    <div class="item active">
+	      <img src="images/showcase_01.jpg" alt="...">
+	      <div class="carousel-caption">
+	        <h1>Front End, in Focus</h1>
+	        <h3>Boost your pharmacy’s front-end sales with research-backed ideas from the experts</h3>
+	      </div>
+	    </div>
+	    <div class="item">
+	      <img src="/images/showcase_02.jpg" alt="...">
+	      <div class="carousel-caption">
+	        <h1>Natural Pharmacy</h1>
+	        <h3>See how O’Brien Pharmacy created a profitable niche business in natural health</h3>
+	      </div>
+	    </div>
+	    <div class="item">
+	      <img src="/images/showcase_03.jpg" alt="...">
+	      <div class="carousel-caption">
+	        <h1>Diabetes Education Classes</h1>
+	        <h3>Host diabetes education classes in your pharmacy to help patients and increase business</h3>
+	      </div>
+	    </div>
+	  </div>
+
+	  <!-- Controls -->
+	  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+	    <span class="glyphicon glyphicon-chevron-left"></span>
+	  </a>
+	  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+	    <span class="glyphicon glyphicon-chevron-right"></span>
+	  </a>
+	</div>
+	</div>
+	<!-- end carousel -->
+<div class="container">
+	<div class='row'>
+	  <div class="col-sm-8">
+	      <div class="row">
+	      <br>
+	      <h3 class='text-muted'>FEATURED</h3>
+	          <hr>
+	          {{range .Articles}}
+	          <div class="row featured_row">
+	          <!-- <div class="col-sm-5"> -->
+	          <p class='teaseText'>
+		          {{.Teaser}} <a href="/elements/{{.PrettyURL}}/">… read more »</a>
+		          </p>
+	          <!-- </div> -->
+	          <!-- <div class="col-sm-7"> -->
+		          <img src='/uploads/{{.Img}}' class='featured_img'>
+	          <!-- </div> -->
+	          <div class="row_hr">
+	          <hr>
+	          </div>
+	          </div>
+	          {{end}}
+
+	          <br>
+	          <br>
+	      <h3 class='text-muted'>BUSINESS</h3>
+	      <hr>
+	      <!-- ANOTHER CAROUSEL -->
+  			<button type="button" class="btn btn-default btn-lg rounded btnPrevious">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+			</button>
+			<button type="button" class="btn btn-default btn-lg rounded pull-right btnNext">
+			<span class="glyphicon glyphicon-chevron-right "></span>
+			</button>
+
+			<div class="scroller" id="faux">
+				<ul>
+					{{range .Articles}}
+					<li style="background-image: url(/uploads/{{.Img}}); background-size: 100%; background-repeat: no-repeat;">
+					<br><br><br><br><br>
+					<p>{{.Teaser}}</p>
+					</li>
+					{{end}}
+				</ul>
+			</div>
+	      <!-- END CAROUSEL -->
+	      <br>
+	      <br>
+	      <!-- ANOTHER CAROUSEL -->
+	      <h3 class='text-muted'>BUSINESS REAL</h3>
+	      <hr>
+  			<button type="button" class="btn btn-default btn-lg rounded BusinessbtnPrevious">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+			</button>
+			<button type="button" class="btn btn-default btn-lg rounded pull-right BusinessbtnNext">
+			<span class="glyphicon glyphicon-chevron-right "></span>
+			</button>
+
+			<div class="scroller" id="business_real">
+				<ul>
+					<li id="business_li_1" style="background-size: 100%; background-repeat: no-repeat;">
+					<br><br><br><br><br>
+					<p id="business_1">One</p>
+					</li>
+					<li id="business_li_2" style="background-size: 100%; background-repeat: no-repeat;">
+					<br><br><br><br><br>
+					<p id="business_2">Two</p>
+					</li>
+					<li id="business_li_3" style="background-size: 100%; background-repeat: no-repeat;">
+					<br><br><br><br><br>
+					<p id="business_3">Two</p>
+					</li>
+					<li id="business_li_4" style="background-size: 100%; background-repeat: no-repeat;">
+					<br><br><br><br><br>
+					<p id="business_4">Two</p>
+					</li>
+					<li id="business_li_5" style="background-size: 100%; background-repeat: no-repeat;">
+					<br><br><br><br><br>
+					<p id="business_5">Two</p>
+					</li>
+					<li id="business_li_6" style="background-size: 100%; background-repeat: no-repeat;">
+					<br><br><br><br><br>
+					<p id="business_6">Two</p>
+					</li>
+				</ul>
+			</div>
+	      <!-- END CAROUSEL -->
+	      <br>
+	      </div>
+	  </div>
+	  <div class='col-sm-4 rightside'>
+	      <div class="row">
+		      <br>
+		      <h3 class='text-muted'>SUBSCRIBE</h3>
+		      <hr>
+		      <img src='./images/img_elementsCover_q1_2014.png' class='pull-left subscribe_img'>
+		      <p>Sign up for a FREE subscription to Elements magazine!</p>
+	      </div>
+	      <br>
+	      <br>
+	      <div class='row'>
+	      <h3 class='text-muted'>E-NEWSLETTER</h3>
+	      <hr>
+	      <img src='./images/img_icon-mail.png' class='pull-right'>
+	      <p class='pull-left reducedWidth'>Sign up to receive the weekly Elements e-newsletter for bonus business tips and advice.</p>
+			<div class="input-group">
+			<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+			<span class="input-group-addon">Sign up</span>
+			</div>
+	      </div>
+	      <br>
+	      <br>
+	      <div class='row'>
+  	      <h3 class='text-muted'>TOPICS</h3>
+	      <hr>
+			<p>Business</p>
+			<p>Community</p>
+			<p>Industry</p>
+			<p>Marketing</p>
+			<p>Operations</p>
+			<p>Retail</p>
+			<p>Technology</p>
+	      </div>
+	  </div>
+	</div>
+</div>
+
+
+<script>
+// resolve "featured" by Go
+// fetch rest in ajax, ie 'Business', 'Community', etc
+// probably limit this in the server to 6 results
+var business_articles = []
+$.get( "/api/elements/business", function(data) {
+  // console.log("Got", data)
+  business_articles = JSON.parse(data)
+  init_Business_Articles();
+});
+
+init_Business_Articles = function(){
+	// put results in the DOM
+
+	business_articles = business_articles.articles
+	var idx = 1
+	business_articles.forEach(function(article){
+		// console.log(article)
+		$("#business_"+idx).text(article.teaser )
+		$("#business_li_"+idx).css('background-image', 'url(/uploads/' + article.Img + ')');
+		idx++
+	})
+
+	// carousel
+	var carousel = $('#business_real ul');
+	var carouselChild = carousel.find('li');
+	var clickCount = 0;
+	itemWidth = carousel.find('li:first').width()+1;
+	refreshChildPosition();
+	$('.BusinessbtnNext').click(function(){
+				clickCount++;
+				lastItem = carousel.find('li:first');
+				lastItem.remove().appendTo(carousel);
+				lastItem.css('left', ((carouselChild.length-1)*(itemWidth))+(clickCount*itemWidth));
+				//Animate the slider to left as item width 
+				carousel.finish().animate({
+					left : '-='+itemWidth
+				},300, function(){
+					// console.log("Done")
+					//Find the first item and append it as the last item.
+					// lastItem = carousel.find('li:first');
+					// lastItem.remove().appendTo(carousel);
+					// lastItem.css('left', ((carouselChild.length-1)*(itemWidth))+(clickCount*itemWidth));
+				});
+			});
+			
+	$('.BusinessbtnPrevious').click(function(){
+		clickCount--;
+		//Find the first item and append it as the last item.
+		lastItem = carousel.find('li:last');
+		lastItem.remove().prependTo(carousel);
+
+		lastItem.css('left', itemWidth*clickCount);				
+		//Animate the slider to right as item width 
+		carousel.finish().animate({
+			left: '+='+itemWidth
+		},300);
+	});
+
+	function refreshChildPosition(){
+		carouselChild.each(function(){
+			$(this).css('left', itemWidth*carouselChild.index($(this)));
+		});
+	}
+	
+	function refreshChildPositionNext(){
+		carouselChild.each(function(){
+			leftVal =  parseInt($(this).css('left'));
+		});
+	}
+}
+
+</script>
+
+<script>
+$(function(){
+			var carousel = $('#faux ul');
+			var carouselChild = carousel.find('li');
+			var clickCount = 0;
+			
+			itemWidth = carousel.find('li:first').width()+1; //Including margin
+
+			//Set Carousel width so it won't wrap
+			carousel.width(itemWidth*carouselChild.length);
+
+			//Place the child elements to their original locations.
+			refreshChildPosition();
+			
+			//Set the event handlers for buttons.
+			$('.btnNext').click(function(){
+				clickCount++;
+				
+				//Animate the slider to left as item width 
+				carousel.finish().animate({
+					left : '-='+itemWidth
+				},300, function(){
+					//Find the first item and append it as the last item.
+					lastItem = carousel.find('li:first');
+					lastItem.remove().appendTo(carousel);
+					lastItem.css('left', ((carouselChild.length-1)*(itemWidth))+(clickCount*itemWidth));
+				});
+			});
+			
+			$('.btnPrevious').click(function(){
+				clickCount--;
+				//Find the first item and append it as the last item.
+				lastItem = carousel.find('li:last');
+				lastItem.remove().prependTo(carousel);
+
+				lastItem.css('left', itemWidth*clickCount);				
+				//Animate the slider to right as item width 
+				carousel.finish().animate({
+					left: '+='+itemWidth
+				},300);
+			});
+
+			function refreshChildPosition(){
+				carouselChild.each(function(){
+					$(this).css('left', itemWidth*carouselChild.index($(this)));
+				});
+			}
+			
+			function refreshChildPositionNext(){
+				carouselChild.each(function(){
+					leftVal =  parseInt($(this).css('left'));
+				});
+			}
+		});
+	</script>
+
+	<style>
+
+	/*buffer for scroller*/
+	#business_real > ul{
+		margin-left: -200px;
+	}
+
+#edit_featured{
+	position: absolute;
+	z-index: 5;
+	float:right;
+	right:0;
+}
+.teaseText{
+	width: 40%;
+	float: left;
+}
+
+.scroller{
+			padding-top: 20px;
+			/*width: 657px;*/
+			width: 100%;
+			overflow: hidden;
+			height: 300px;
+			position: relative;
+		}.scroller ul{
+			position: relative;
+			list-style: none;
+			list-style-type: none;
+			margin: 0;
+			height: 300px;
+			padding: 0;
+		}.scroller ul li{
+			position: absolute;
+			height: 305px;
+			width: 200px;
+			float: left;
+			margin-right: 1px;
+			background: #f2f2f2;
+			text-align: center;
+			padding-top: 25px;
+		}
+
+.rounded{
+	border-radius: 80px;
+	outline: 0;
+}
+
+.rounded:focus, .rounded:active{
+	border-radius: 80px;
+	outline: 0;
+}
+
+.featured_img{
+	height: 200px;
+	float: right;
+}
+
+.featured_row{
+	padding-bottom: 5%;
+}
+
+.subscribe_img{
+	height: 180px;
+}
+
+.rightside{
+	padding-left: 50px;
+}
+
+.reducedWidth{
+	width: 80%;
+}
+
+
+/*to alternate the featured row img*/
+body > div.mm-page > div.lol > div.container > div > div.col-sm-8 > div > div:nth-child(5) > p{
+	float: right;
+}
+body > div.mm-page > div.lol > div.container > div > div.col-sm-8 > div > div:nth-child(5) > img{
+	float: left;
+}
+
+
+/*more alternation*/
+body > div.mm-page > div.lol > div.container > div > div.col-sm-8 > div > div:nth-child(7) > img{
+	float: left;
+}
+
+body > div.mm-page > div.lol > div.container > div > div.col-sm-8 > div > div:nth-child(7) > p{
+	float: right;
+}
+
+.row_hr{
+	padding-top: 1%;
+	clear: both;
+}
+
+</style>
+
+
+{{end}}

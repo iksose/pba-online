@@ -3,26 +3,90 @@
 
 <div class="row">
   <div class="col-md-7 col-md-offset-1">
+      <div class="row" id="article_body">
       <h1 class="text-muted">{{.Article.Header}}</h1>
       <p>{{.Article.Body}}</p>
+      </div>
   <hr>
+
+    {{if .User.Username}}
+
+    <div class='row'>
+        <a href="#" type="button" class="btn btn-default pull-left" id="deletePost">Delete</a>
+        <a href="edit/" type="button" class="btn btn-success pull-right" >Edit</a>
+    </div>
+    {{end}}
 
   </div>
   <div class="col-md-4">
       <h3 class="text-muted">News</h3>
       <hr>
   </div>
+
+  
+<br>
+
 </div>
+
+<br>
+
+<br>
+
+<br>
+
+
 
 
 <style>
+
+
+
+.peePants{
+    width: 100%;
+}
 .wut{
     float: left;
     padding-left: 5%;
     padding-right: 5%;
 }
 
+body > div.row > div.col-md-7.col-md-offset-1 > p > img{
+    /*height: 300px;
+    width: 500px;*/
+}
+
 </style>
+
+<script>
+
+    var article = {}
+    article.Id = {{.Article.Id}}
+
+$("#deletePost").on('click', function(event){
+  console.log("Clicked")
+  event.preventDefault();
+  var prompt = confirm("Are you sure?")
+  if(prompt){
+    console.log("okay...")
+    $.ajax({
+    type: "DELETE",
+    contentType: 'application/json; charset=utf-8',
+    url: "/new",
+    data: JSON.stringify(article),
+    dataType: 'json',
+    // success: window.history.go(-1),
+    success: function(){
+      window.history.go(-2)
+    },
+      error: function(){console.log("Fuck")}
+    });
+  }else{
+    console.log("Thank god")
+  }
+})
+
+document.getElementById("article_body").getElementsByTagName("img")[0].className = "peePants"
+</script>
 
 
 {{end}}
