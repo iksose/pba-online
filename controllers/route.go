@@ -17,6 +17,11 @@ import (
 	_ "image/jpeg"
 	_ "image/png"
 
+	// for the proxy
+	// "flag"
+	// "github.com/elazarl/goproxy"
+	"net/url"
+
 	ctx "github.com/gorilla/context"
 	// "github.com/gorilla/pat"
 	"github.com/disintegration/imaging"
@@ -30,6 +35,11 @@ import (
 
 var templateDelims = []string{"{{%", "%}}"}
 var Logger = log.New(os.Stdout, " ", log.Ldate|log.Ltime|log.Lshortfile)
+
+// var proxy = goproxy.NewProxyHttpServer()
+
+// var target *string
+// var target = flag.String("target", "http://stackoverflow.com", "/tags")
 
 // CreateAdminRouter creates the routes for handling requests to the web interface.
 // This function returns an http.Handler to be used in http.ListenAndServe().
@@ -55,6 +65,8 @@ func CreateAdminRouter() http.Handler {
 	router.HandleFunc("/elements", Elements)
 	router.HandleFunc("/new", NewPost)
 	router.HandleFunc("/tags", GetTags)
+	// router.HandleFunc("/negotiator/{article}/", Nego)
+
 	// router.NotFoundHandler = http.HandlerFunc(notFound)
 	// router.HandleFunc("/", Use(Base, mid.RequireLogin))
 	router.HandleFunc("/", Base)
@@ -64,6 +76,11 @@ func CreateAdminRouter() http.Handler {
 	api = api.StrictSlash(true)
 	// api.HandleFunc("/", Use(API, mid.RequireLogin))
 	api.HandleFunc("/elements/{elementtype}", ElementsByType)
+
+	// reverseProxy
+	proxy := router.PathPrefix("/negotiator/").Subrouter()
+	proxy = proxy.StrictSlash(true)
+	proxy.HandleFunc("/{path:.*}", Nego)
 
 	// // Setup static file serving
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
@@ -162,6 +179,134 @@ func GetTags(w http.ResponseWriter, r *http.Request) {
 	// JSONResponse(w, msg, http.StatusOK)
 
 	// JSONResponse(w, "ok", http.StatusOK)
+}
+
+type myjar struct {
+	jar map[string][]*http.Cookie
+}
+
+func (p *myjar) SetCookies(u *url.URL, cookies []*http.Cookie) {
+	fmt.Printf("The URL is : %s\n", u.String())
+	// fmt.Printf("The cookie being set is : %s\n", cookies)
+	p.jar[u.Host] = cookies
+}
+
+func (p *myjar) Cookies(u *url.URL) []*http.Cookie {
+	fmt.Printf("The URL is : %s\n", u.String())
+	// fmt.Printf("Cookie being returned is : %s\n", p.jar[u.Host])
+	return p.jar[u.Host]
+}
+
+func fatal(err error) {
+	if err != nil {
+		log.Fatal(err)
+		os.Exit(1)
+	}
+}
+
+func copyHeader(source http.Header, dest *http.Header) {
+	for n, v := range source {
+		for _, vv := range v {
+			dest.Add(n, vv)
+		}
+	}
+}
+
+func Nego(w http.ResponseWriter, r *http.Request) {
+	// path
+	vars := mux.Vars(r)
+	path := vars["path"]
+	Logger.Println("path? ", path)
+
+	//cookies
+	jar := &myjar{}
+	jar.jar = make(map[string][]*http.Cookie)
+
+	client := &http.Client{}
+	// client.Jar = jar
+	// target = flag.String("target", "https://www.pbahealth.com/pbao/Default.aspx", "")
+	// flag.Parse()
+	// uri := *target + r.RequestURI
+	uri := "https://www.pbahealth.com/pbao/" + path
+	// uri := "https://www.pbahealth.com/pbao/pbaoUnifiedMain.aspx"
+
+	fmt.Println(r.Method + ": " + uri)
+
+	if r.Method == "POST" {
+		Logger.Println("Post???")
+		body, err := ioutil.ReadAll(r.Body)
+		fatal(err)
+		fmt.Printf("Body: %v\n", string(body))
+	}
+
+	rr, err := http.NewRequest(r.Method, uri, r.Body)
+	fatal(err)
+	copyHeader(r.Header, &rr.Header)
+	// rr.SetBasicAuth("12600370", "test1234")
+	// rr.AddCookie(&cookie)
+	rr.Header.Set("Cookie", "ASP.NET_SessionId=eqi40555bj2djg45p3jfyx55")
+
+	//jon
+
+	// client := &http.Client{}
+	// client.Jar = jar
+	resp, err := client.Do(rr)
+	fatal(err)
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	fatal(err)
+
+	dH := w.Header()
+	copyHeader(resp.Header, &dH)
+	dH.Add("Requested-Host", rr.Host)
+
+	w.Write(body)
+
+	//end jon
+
+	// Create a client and query the target
+	// var transport http.Transport
+	// resp, err := transport.RoundTrip(rr)
+	// fatal(err)
+
+	// fmt.Printf("Resp-Headers: %v\n", resp.Header)
+
+	// defer resp.Body.Close()
+	// body, err := ioutil.ReadAll(resp.Body)
+	// fatal(err)
+
+	// dH := w.Header()
+	// copyHeader(resp.Header, &dH)
+	// dH.Add("Requested-Host", rr.Host)
+
+	// w.Write(body)
+	// w.Header().Set("Content-Type", "text/html")
+	// jar := &myjar{}
+	// jar.jar = make(map[string][]*http.Cookie)
+
+	// client := &http.Client{}
+	// client.Jar = jar
+
+	// /* Authenticate */
+	// req, err := http.NewRequest("GET", "https://www.pbahealth.com/pbao/Negotiator/negMain.aspx", nil)
+	// req.SetBasicAuth("12600370", "test1234")
+	// resp, err := client.Do(req)
+	// if err != nil {
+	// 	fmt.Printf("Error : %s", err)
+	// }
+	// Logger.Println("Okay...")
+	// // /* Get Details */
+	// // req.URL, _ = url.Parse("http://164.99.113.32/Details")
+	// // resp, err = client.Do(req)
+	// // if err != nil {
+	// // 	fmt.Printf("Error : %s", err)
+	// // }
+	// Logger.Println(resp)
+	// // fmt.Fprint(w, Response{"articles": resp})
+	// // http.Redirect(w, r, "https://www.pbahealth.com/pbao/Negotiator/negMain.aspx", 302)
+	// // w = resp
+	// fmt.Fprint(w, r)
+	// return
 }
 
 func About(w http.ResponseWriter, r *http.Request) {

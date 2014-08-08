@@ -5,19 +5,33 @@
 <div class="row" >
   <div class="col-md-7 col-md-offset-1">
       <div class="row">
-      <form role="form">
       <br>
       <input type="text" class="form-control input-lg" placeholder="Enter title" id="new_title">
       <br>
 		<textarea name="content" cols="50" rows="15" placeholder="Article" required>
 
 		</textarea>
-	    <div class="row">
 	    <hr>
+        <!-- post options -->
+        <div id="post_options">
+            <!-- featured -->
+            <div class="input-group">
+              <span class="input-group-addon">
+                <input type="checkbox">
+              </span>
+              <input type="text" class="form-control" placeholder="featured image url">
+            </div><!-- /input-group -->
+
+            <div id="bloodhound">
+            <input class="typeahead" type="text" placeholder="Tags">
+            </div>
+
+            <div id="tags"></div><span class="glyphicon glyphicon-remove" id="removeLast"></span>
+        </div>
+        <hr>
+        <!-- end post options -->
         <a href="#" type="button" class="btn btn-success" id="saveEdit">Publish</a>
         <button type="button submit" class="btn btn-success" id="uploadImg">Upload</button>
-    </div>
-		</form>
     </div>
   <hr>
 
@@ -76,6 +90,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
+                            <input type="radio" id="r1" name="rate" value="16/9" checked="checked"> 16:9 Wide
+                            <input type="radio" id="r2" name="rate" value="2.40/1"> Ultrawide
                             <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
                             <button class="btn btn-primary avatar-save" type="submit">Save</button>
                         </div>
@@ -100,12 +116,6 @@
 <!-- end div class container -->
 </div>
 
-<div id="bloodhound">
-  <input class="typeahead" type="text" placeholder="States of USA">
-</div>
-
-<div id="tags">
-</div>
 
 
 <script>
@@ -168,7 +178,14 @@ $('#bloodhound .typeahead').on('keydown', function(event) {
                   $('.typeahead').typeahead('val', ""); // clear typeahead
                 }
               }
-        })
+})
+
+$("#removeLast").on('click', function(){
+    // console.log("clicked!")
+    selectedTags.pop()
+    selectedTagIDs.pop();
+    $("#tags").text(selectedTags.toString())
+})
 
 
 
@@ -250,6 +267,53 @@ function getTrimmed(){
 
 
 <style>
+
+
+/*TYPEAHEAD CSS*/
+
+.tt-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  list-style: none;
+  font-size: 14px;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+}
+.tt-suggestion > p {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.428571429;
+  color: #333333;
+  white-space: nowrap;
+}
+.tt-suggestion > p:hover,
+.tt-suggestion > p:focus,
+.tt-suggestion.tt-cursor p {
+  color: #ffffff;
+  text-decoration: none;
+  outline: 0;
+  background-color: #428bca;
+}
+
+/*END TYPEAHEAD CSS*/
+
+#tags{
+    display:inline;
+}
 
 #tinymce > p > img{
     height: 200px;
@@ -531,6 +595,8 @@ function getTrimmed(){
 </style>
 
 <script>
+
+
 
 (function (factory) {
     if (typeof define === "function" && define.amd) {
@@ -1429,6 +1495,7 @@ function getTrimmed(){
         $.extend(Cropper.defaults, options);
     };
 
+
     // Reference the old cropper
     Cropper.other = $.fn.cropper;
 
@@ -1522,9 +1589,12 @@ function getTrimmed(){
         },
 
         addListener: function () {
+            var self = this
             document.getElementById('uploadImg').addEventListener('click', function(event) {
                 console.log("Derp")
-                $.proxy(this.change, this);
+                // $.proxy(this.change, this);
+                self.$avatarModal.modal("show");
+                self.initPreview();
             })
             this.$avatarView.on("click", $.proxy(this.click, this));
             this.$avatarInput.on("change", $.proxy(this.change, this));
@@ -1646,6 +1716,18 @@ function getTrimmed(){
         },
 
         startCropper: function () {
+            console.log("Starting cropper")
+            var _first
+            var _second
+            if (document.getElementById('r1').checked){
+                console.log("r1 checked")
+                _first = 16;
+                _second = 9;
+            }else{
+                console.log("r2 checked")
+                _first = 2.40;
+                _second = 1;
+            }
             var _this = this;
 
             if (this.active) {
@@ -1654,7 +1736,8 @@ function getTrimmed(){
                 this.$img = $('<img src="' + this.url + '">');
                 this.$avatarWrapper.empty().html(this.$img);
                 this.$img.cropper({
-                    aspectRatio: 16/9,
+                    // aspectRatio: 2.40/1,
+                    aspectRatio: _first/_second,
                     preview: this.$avatarPreview.selector,
                     done: function (data) {
                         var json = [
@@ -1782,6 +1865,17 @@ function getTrimmed(){
 
     $(function () {
         var example = new CropAvatar($("#crop-avatar"));
+        $("#r1").on('click', function(){
+            // console.log("FIND ME")
+            example.stopCropper();
+            example.startCropper();
+        })
+        $("#r2").on('click', function(){
+            // console.log("FIND ME 2")
+            // example.startCropper();
+            example.stopCropper();
+            example.startCropper();
+        })
     });
 });
 
